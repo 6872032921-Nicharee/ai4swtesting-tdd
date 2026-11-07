@@ -311,8 +311,6 @@ By the end of this activity you should be able to:
    ```
 3. Run `npm test` until **both** tests pass. Then commit with the message `loop 2: green`.
 
-> ⚠️ **A JavaScript trap:** if `getTimesheets` returns `this.timesheets.values()`, the test fails with `received value must have a length property`. `Map.prototype.values()` returns an **iterator**, not an array, so it has no `length`. In Java (the book's language), the equivalent code works. Fix it with `return [...this.timesheets.values()];`. AI tools often carry habits over from other languages.
-
 **Optional:** undo the change and send the prompt again **without** the first sentence. What design does the agent choose when you don't give it one?
 
 ### Step 3 – Reflect

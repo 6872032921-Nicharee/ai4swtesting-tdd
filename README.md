@@ -310,8 +310,6 @@ Features:
    ```
 3. รัน `npm test` จน test **ทั้งสองตัว**ผ่าน แล้ว commit ด้วย message `loop 2: green`
 
-> ⚠️ **กับดักของ JavaScript:** ถ้า `getTimesheets` คืนค่า `this.timesheets.values()` test จะล้มเหลวพร้อมข้อความ `received value must have a length property` เพราะ `Map.prototype.values()` คืนค่าเป็น **iterator** ไม่ใช่ array จึงไม่มี `length` ใน Java (ภาษาที่ใช้ในหนังสือ) โค้ดแบบเดียวกันนี้ใช้ได้ ให้แก้เป็น `return [...this.timesheets.values()];` เครื่องมือ AI มักติดนิสัยจากภาษาอื่นมาด้วย
-
 **ทำเพิ่มเติม (ไม่บังคับ):** ยกเลิกการเปลี่ยนแปลง แล้วส่ง prompt อีกครั้ง**โดยไม่มี**ประโยคแรก agent เลือกการออกแบบแบบไหนเมื่อเราไม่ได้กำหนดให้
 
 ### ขั้นที่ 3 – สะท้อนคิด
