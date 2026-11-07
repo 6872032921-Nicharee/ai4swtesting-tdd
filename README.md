@@ -1,128 +1,128 @@
 # ai4swtesting-tdd
 
-🌐 **English** | [ภาษาไทย](README.th.md)
+🌐 [English](README.md) | **ภาษาไทย**
 
-A hands-on exercise in using generative AI to aid **test-driven development (TDD)**, for the **AI for Software Testing** lecture
-(2110724 Software Testing and Quality Assurance).
+แบบฝึกหัดลงมือปฏิบัติเรื่องการใช้ Generative AI ช่วยในการพัฒนาแบบ **Test-Driven Development (TDD)** สำหรับการบรรยายเรื่อง **AI for Software Testing**
+(วิชา 2110724 Software Testing and Quality Assurance)
 
-The exercise follows the worked TDD example in Chapter 4 of the book *Software Testing with Generative AI* (Mark Winteringham, Manning), rewritten in **JavaScript and Jest** instead of Java and JUnit.
-You will build a small timesheet manager one red/green/refactor loop at a time. A **coding agent in VS Code** helps you write the tests and the code, and also plays the role of a tester you pair with.
+แบบฝึกหัดนี้อ้างอิงจากตัวอย่าง TDD ในบทที่ 4 ของหนังสือ *Software Testing with Generative AI* (Mark Winteringham, Manning) โดยเปลี่ยนจาก Java และ JUnit มาเป็น **JavaScript และ Jest**
+นิสิตจะสร้างระบบจัดการ timesheet ขนาดเล็กทีละรอบของ red/green/refactor โดยมี **coding agent ใน VS Code** ช่วยเขียน test และโค้ด และทำหน้าที่เป็น tester ที่มาจับคู่ทำงาน (pair) กับเราด้วย
 
-## Before you start
+## ก่อนเริ่ม
 
-### 1. Fork and clone this repo
+### 1. Fork และ clone repo นี้
 
-You **must fork this repository** to your own GitHub account and do all your work in your fork. In this exercise you write and run code, so you need to work **on your computer**, not in the browser.
+นิสิต**ต้อง fork repository นี้**ไปยังบัญชี GitHub ของตัวเอง และทำงานทั้งหมดใน fork ของตัวเอง แบบฝึกหัดนี้ต้องเขียนและรันโค้ด จึงต้องทำ**บนเครื่องคอมพิวเตอร์** ไม่ใช่ผ่านเบราว์เซอร์
 
-1. Sign in to [GitHub](https://github.com). If you don't have an account, create one for free.
-2. Click the **Fork** button at the top right of this page, then click **Create fork**.
-3. Clone **your fork** (`https://github.com/<your-username>/ai4swtesting-tdd`), not this original repo:
+1. เข้าสู่ระบบ [GitHub](https://github.com) (ถ้ายังไม่มีบัญชี สมัครได้ฟรี)
+2. กดปุ่ม **Fork** ที่มุมขวาบนของหน้านี้ แล้วกด **Create fork**
+3. Clone **fork ของตัวเอง** (`https://github.com/<your-username>/ai4swtesting-tdd`) ไม่ใช่ repo ต้นฉบับนี้:
    ```bash
    git clone https://github.com/<your-username>/ai4swtesting-tdd.git
    cd ai4swtesting-tdd
    ```
 
-### 2. Install the tools
+### 2. ติดตั้งเครื่องมือ
 
-You need:
+สิ่งที่ต้องมี:
 
-- **Node.js 18 or later** – <https://nodejs.org> (the LTS version is fine). Check with `node --version`.
-- **Git** – <https://git-scm.com>. Check with `git --version`.
-- **Visual Studio Code** – <https://code.visualstudio.com>.
-- **A coding agent in VS Code.** Any agent that can read and edit the files in your project works, for example:
-  - **GitHub Copilot** in agent mode: install the GitHub Copilot extension, open the **Chat** view, and choose **Agent** mode. The free plan (**Copilot Free**) is enough for this exercise, and verified students on [GitHub Education](https://education.github.com) can use Copilot Pro for free.
-  - **OpenAI Codex**, **Claude Code** or **Gemini Code Assist**: install the extension from the VS Code **Extensions** view (`Ctrl+Shift+X`, or `Cmd+Shift+X` on macOS) and sign in. Some of these need a paid plan, so check before you start.
-- About 1 hour.
+- **Node.js เวอร์ชัน 18 ขึ้นไป** – <https://nodejs.org> (ใช้เวอร์ชัน LTS ได้) ตรวจสอบด้วยคำสั่ง `node --version`
+- **Git** – <https://git-scm.com> ตรวจสอบด้วยคำสั่ง `git --version`
+- **Visual Studio Code** – <https://code.visualstudio.com>
+- **Coding agent ใน VS Code** ใช้ agent ตัวไหนก็ได้ที่อ่านและแก้ไขไฟล์ในโปรเจกต์ได้ เช่น:
+  - **GitHub Copilot** ใน agent mode: ติดตั้ง extension GitHub Copilot เปิดหน้า **Chat** แล้วเลือกโหมด **Agent** แผนฟรี (**Copilot Free**) เพียงพอสำหรับแบบฝึกหัดนี้ และถ้านิสิตยืนยันสถานะนักศึกษากับ [GitHub Education](https://education.github.com) แล้ว จะใช้ Copilot Pro ได้ฟรี
+  - **OpenAI Codex**, **Claude Code** หรือ **Gemini Code Assist**: ติดตั้ง extension จากหน้า **Extensions** ของ VS Code (`Ctrl+Shift+X` หรือ `Cmd+Shift+X` บน macOS) แล้วเข้าสู่ระบบ บางตัวต้องใช้แผนแบบเสียเงิน ให้ตรวจสอบก่อนเริ่ม
+- เวลาประมาณ 1 ชั่วโมง
 
-### 3. Install the project and run the tests
+### 3. ติดตั้งโปรเจกต์และรัน test
 
-In the project folder, run:
+ในโฟลเดอร์ของโปรเจกต์ ให้รัน:
 
 ```bash
 npm install
 npm test
 ```
 
-The test run **fails** with `Your test suite must contain at least one test.` This is expected: [`tests/timesheet.test.js`](tests/timesheet.test.js) contains no tests yet. You will add them in Activity 2.
+การรัน test จะ**ล้มเหลว**พร้อมข้อความ `Your test suite must contain at least one test.` ซึ่งเป็นเรื่องปกติ เพราะไฟล์ [`tests/timesheet.test.js`](tests/timesheet.test.js) ยังไม่มี test เลย นิสิตจะเพิ่ม test ในกิจกรรม 2
 
-The project has two files you will work on:
+ในโปรเจกต์มีไฟล์ที่นิสิตต้องแก้ไข 2 ไฟล์:
 
-| File | What it is |
-|------|------------|
-| [`src/timesheet.js`](src/timesheet.js) | Production code: an empty `Timesheet` class |
-| [`tests/timesheet.test.js`](tests/timesheet.test.js) | Unit tests (Jest): empty, apart from the line that loads `Timesheet` |
+| ไฟล์ | คืออะไร |
+|------|---------|
+| [`src/timesheet.js`](src/timesheet.js) | Production code: คลาส `Timesheet` ที่ยังว่างอยู่ |
+| [`tests/timesheet.test.js`](tests/timesheet.test.js) | Unit test (Jest): ยังว่างอยู่ มีเพียงบรรทัดที่โหลด `Timesheet` |
 
-### How to submit
+### วิธีส่งงาน
 
-You submit **your code and its commit history**. You don't need to write or submit any answer files.
+นิสิตส่ง**โค้ดพร้อมประวัติการ commit** ไม่ต้องเขียนหรือส่งไฟล์คำตอบใด ๆ
 
-1. **Commit after every red, green and refactor step**, using the commit messages given in each activity (for example, `loop 1: red`). Your commit history is how your instructor sees that you worked test-first.
-2. Push your commits to your fork:
+1. **Commit ทุกครั้งที่จบขั้น red, green และ refactor** โดยใช้ commit message ตามที่กำหนดในแต่ละกิจกรรม (เช่น `loop 1: red`) ผู้สอนจะดูจากประวัติการ commit ว่านิสิตเขียน test ก่อนเขียนโค้ดจริง
+2. Push commit ทั้งหมดขึ้น fork ของตัวเอง:
    ```bash
    git push
    ```
-3. **Submit the URL of your fork** (`https://github.com/<your-username>/ai4swtesting-tdd`) **on MyCourseVille.** Make sure all your work is committed and pushed.
+3. **ส่ง URL ของ fork ตัวเอง** (`https://github.com/<your-username>/ai4swtesting-tdd`) **ใน MyCourseVille** และตรวจสอบให้แน่ใจว่างานทั้งหมด commit และ push แล้ว
 
-## The feature: a timesheet manager
+## ฟีเจอร์ที่จะสร้าง: ระบบจัดการ timesheet
 
-All the activities build parts of this user story:
+ทุกกิจกรรมจะสร้างส่วนต่าง ๆ ของ user story นี้:
 
-> As a timesheet user, I want to be able to track time against specific projects, so that I can keep a history of how much time I have spent working on individual projects.
+> ในฐานะผู้ใช้ timesheet ฉันต้องการบันทึกเวลาที่ใช้กับแต่ละโปรเจกต์ได้ เพื่อเก็บประวัติว่าฉันใช้เวลาทำงานในแต่ละโปรเจกต์ไปเท่าไร
 >
-> **Features:**
-> - Time is tracked in half hour units.
-> - To complete a timesheet, a project and amount of time must be entered.
-> - Only I should be able to see my tracked time.
+> **ฟีเจอร์:**
+> - บันทึกเวลาเป็นหน่วยครึ่งชั่วโมง
+> - การกรอก timesheet ให้ครบต้องระบุโปรเจกต์และจำนวนเวลา
+> - เวลาที่บันทึกไว้ต้องเห็นได้เฉพาะตัวฉันเท่านั้น
 
-## Activities
+## รายการกิจกรรม
 
-| # | Activity |
-|---|----------|
-| 1 | [Think before you code: let the LLM ask questions](#activity-1--think-before-you-code-let-the-llm-ask-questions) |
-| 2 | [Loop 1: Submit a timesheet](#activity-2--loop-1-submit-a-timesheet) |
-| 3 | [Loop 2: Retrieve timesheets](#activity-3--loop-2-retrieve-timesheets) |
-| 4 | [Loop 3: Total the hours for a project](#activity-4--loop-3-total-the-hours-for-a-project) |
-| 5 | [Refactor with an LLM pair](#activity-5--refactor-with-an-llm-pair) |
+| # | กิจกรรม |
+|---|---------|
+| 1 | [คิดก่อนเขียนโค้ด: ให้ LLM ช่วยตั้งคำถาม](#กิจกรรม-1--คิดก่อนเขียนโค้ด-ให้-llm-ช่วยตั้งคำถาม) |
+| 2 | [Loop 1: ส่ง timesheet](#กิจกรรม-2--loop-1-ส่ง-timesheet) |
+| 3 | [Loop 2: ดึงรายการ timesheet](#กิจกรรม-3--loop-2-ดึงรายการ-timesheet) |
+| 4 | [Loop 3: รวมชั่วโมงของโปรเจกต์](#กิจกรรม-4--loop-3-รวมชั่วโมงของโปรเจกต์) |
+| 5 | [Refactor โดยมี LLM เป็นคู่หู](#กิจกรรม-5--refactor-โดยมี-llm-เป็นคู่หู) |
 
-### The TDD loop
+### วงจร TDD
 
-Activities 2 to 5 follow the **red/green/refactor** loop:
+กิจกรรม 2 ถึง 5 ใช้วงจร **red/green/refactor**:
 
-1. **Red** – write a unit test for behaviour that doesn't exist yet, and watch it fail.
-2. **Green** – write just enough production code to make the test pass (and keep every other test passing).
-3. **Refactor** – improve the code while keeping all the tests green.
+1. **Red** – เขียน unit test สำหรับพฤติกรรมที่ยังไม่มีอยู่ แล้วดูให้เห็นว่า test ล้มเหลว
+2. **Green** – เขียน production code ให้น้อยที่สุดเท่าที่จำเป็นเพื่อให้ test ผ่าน (และ test อื่นทั้งหมดยังต้องผ่าน)
+3. **Refactor** – ปรับปรุงโค้ดให้ดีขึ้น โดยที่ test ทั้งหมดยังผ่าน (green) อยู่
 
-The book calls unit tests **checks**: a tool can only check the exact things we assert, while people *test* by exploring and questioning.
-In this exercise, the checks have a second job. Your agent reads your tests as part of its context, so **every test you write is also a prompt** for the production code that the agent writes next.
+หนังสือเรียก unit test ว่า **check** เพราะเครื่องมือตรวจได้เฉพาะสิ่งที่เรา assert ไว้อย่างชัดเจนเท่านั้น ส่วนคน*ทดสอบ (test)* ด้วยการสำรวจและตั้งคำถาม
+ในแบบฝึกหัดนี้ check มีหน้าที่ที่สองด้วย agent อ่าน test ของเราเป็นส่วนหนึ่งของบริบท (context) ดังนั้น **test ทุกตัวที่นิสิตเขียนก็เป็น prompt ด้วย** สำหรับ production code ที่ agent จะเขียนต่อไป
 
-### Working with your coding agent
+### การทำงานกับ coding agent
 
-A coding agent can edit many files and run commands on its own. In TDD, that makes it easy to skip steps, so **you** stay in charge of the loop:
+Coding agent แก้ไขไฟล์ได้หลายไฟล์และรันคำสั่งได้เอง ใน TDD จึงข้ามขั้นตอนได้ง่าย **เราต้องเป็นคนคุม**วงจรเอง:
 
-- **Send one prompt per step.** Use the prompts given in each activity. They are in English, and each one asks for **one** small change.
-- **Read every change before you accept it.** Most agents show a diff that you can keep or undo. If the change does more than the step asks for, undo it, or ask the agent to remove the extra code.
-- **Run `npm test` yourself, and make every commit yourself.** Don't let the agent run git commands. If it asks permission to run one, decline.
-- **Start a new chat (session) for each activity**, unless a step tells you to stay in the same chat.
-- If your agent has a mode that only answers and doesn't edit files (for example, **Ask** mode in Copilot), use it when a step says the agent must not change any files.
+- **ส่ง prompt หนึ่งครั้งต่อหนึ่งขั้น** ใช้ prompt ที่ให้ไว้ในแต่ละกิจกรรม (เป็นภาษาอังกฤษ) ซึ่งแต่ละอันขอให้เปลี่ยนแปลงเล็ก ๆ **เพียงอย่างเดียว**
+- **อ่านทุกการเปลี่ยนแปลงก่อนรับ** agent ส่วนใหญ่แสดง diff ให้เลือกเก็บ (keep) หรือยกเลิก (undo) ถ้าการเปลี่ยนแปลงทำมากกว่าที่ขั้นนั้นขอ ให้ยกเลิก หรือขอให้ agent ลบโค้ดส่วนเกินออก
+- **รัน `npm test` เอง และ commit เองทุกครั้ง** อย่าให้ agent รันคำสั่ง git ถ้า agent ขออนุญาตรัน ให้ปฏิเสธ
+- **เปิดแชตใหม่ (session ใหม่) ทุกครั้งที่เริ่มกิจกรรมใหม่** ยกเว้นขั้นที่บอกให้ใช้แชตเดิม
+- ถ้า agent มีโหมดที่ตอบอย่างเดียวโดยไม่แก้ไฟล์ (เช่น โหมด **Ask** ของ Copilot) ให้ใช้โหมดนั้นในขั้นที่ระบุว่า agent ห้ามแก้ไขไฟล์
 
-> ⚠️ **Experiences may vary.** Agents don't give everyone the same code, and different agents behave differently. Your code may differ from the examples in this README, and that's fine. Check that it does what the step asks for.
+> ⚠️ **ผลลัพธ์อาจไม่เหมือนกัน** agent ไม่ได้เขียนโค้ดเหมือนกันทุกคน และ agent แต่ละตัวก็ทำงานต่างกัน โค้ดที่นิสิตได้อาจต่างจากตัวอย่างใน README นี้ ซึ่งไม่เป็นไร ให้ตรวจสอบว่าโค้ดทำงานตามที่ขั้นนั้นต้องการ
 
 ---
 
-## Activity 1 – Think before you code: let the LLM ask questions
+## กิจกรรม 1 – คิดก่อนเขียนโค้ด: ให้ LLM ช่วยตั้งคำถาม
 
-Before writing any code, we ask the LLM questions about the user story. This is **shift-left testing**: finding ambiguities and risks while the feature is still an idea, when they're cheapest to fix.
+ก่อนเขียนโค้ด เราจะให้ LLM ช่วยตั้งคำถามเกี่ยวกับ user story วิธีนี้เรียกว่า **shift-left testing** คือการหาจุดที่กำกวมและความเสี่ยงตั้งแต่ฟีเจอร์ยังเป็นแค่ไอเดีย ซึ่งเป็นช่วงที่แก้ไขได้ง่ายและถูกที่สุด
 
-### Goals
+### เป้าหมาย
 
-By the end of this activity you should be able to:
+เมื่อทำกิจกรรมนี้เสร็จ นิสิตควรจะสามารถ:
 
-- Use an LLM to generate questions that clarify a user story before you build it.
-- Decide which generated questions to act on, which to set aside for later, and which to ignore.
+- ใช้ LLM สร้างคำถามที่ช่วยทำให้ user story ชัดเจนขึ้นก่อนลงมือสร้าง
+- ตัดสินใจได้ว่าคำถามข้อไหนควรนำไปทำต่อ ข้อไหนเก็บไว้คิดทีหลัง และข้อไหนไม่ต้องสนใจ
 
-### Step 1 – Ask for clarifying questions
+### ขั้นที่ 1 – ขอคำถามที่ช่วยให้ชัดเจนขึ้น
 
-This prompt uses techniques from the earlier exercises: a role, delimiters, rules, two quality characteristics (**accuracy** and **consistency**) and one example of the output. In a **new chat** with your agent, send this prompt:
+Prompt นี้ใช้เทคนิคจากแบบฝึกหัดก่อนหน้า ได้แก่ การกำหนดบทบาท delimiter กฎ quality characteristic 2 ตัว (**accuracy** และ **consistency**) และตัวอย่างของผลลัพธ์ 1 ตัวอย่าง เปิด**แชตใหม่**กับ agent แล้วส่ง prompt นี้:
 
 ```text
 You are a software testing expert. Analyze the text delimited by triple hashes and generate questions that will clarify ambiguities in the text.
@@ -144,42 +144,42 @@ Features:
 ###
 ```
 
-> 💡 The agent doesn't need to change any files for this activity. You can also send this prompt to a web chatbot such as ChatGPT, Gemini or Claude.
+> 💡 กิจกรรมนี้ agent ไม่ต้องแก้ไขไฟล์ใด ๆ จะส่ง prompt นี้ให้ chatbot บนเว็บ เช่น ChatGPT, Gemini หรือ Claude แทนก็ได้
 
-### Step 2 – Sort the questions
+### ขั้นที่ 2 – จัดกลุ่มคำถาม
 
-Read every question and sort it into one of three groups. You don't need to write or submit your answers.
+อ่านคำถามทุกข้อ แล้วจัดเข้ากลุ่มใดกลุ่มหนึ่งใน 3 กลุ่มนี้ ขั้นนี้ไม่ต้องเขียนหรือส่งคำตอบ
 
-- **Act on now:** for example, "How will the system handle invalid time entries?" reminds us to validate input.
-- **Shelve for later:** for example, a question about many users updating the same timesheet. There is only one user for now, but it might matter later.
-- **Rule out:** for example, a question about time zones. We only track *how much* time was spent, not *when*.
+- **ทำทันที:** เช่น "How will the system handle invalid time entries?" เตือนให้เราตรวจสอบความถูกต้องของข้อมูลที่รับเข้ามา (input validation)
+- **เก็บไว้ทีหลัง:** เช่น คำถามเรื่องผู้ใช้หลายคนแก้ไข timesheet เดียวกัน ตอนนี้มีผู้ใช้คนเดียว แต่อาจสำคัญในอนาคต
+- **ตัดทิ้ง:** เช่น คำถามเรื่อง time zone เพราะเราบันทึกแค่ว่าใช้เวลา*เท่าไร* ไม่ได้บันทึกว่า*เมื่อไร*
 
-Keep the questions in mind. You will come back to one of them in Activity 4.
+จำคำถามเหล่านี้ไว้ เพราะจะกลับมาใช้คำถามข้อหนึ่งอีกในกิจกรรม 4
 
-### Key takeaways
+### สรุปประเด็นสำคัญ
 
-- Generated questions make you look at a design from angles you might have missed, even when some of the questions are poor.
-- **You decide** which questions matter. The LLM doesn't know your product, your plans or your users.
+- คำถามที่ LLM สร้างขึ้นช่วยให้เรามองการออกแบบจากมุมที่อาจมองข้ามไป แม้คำถามบางข้อจะไม่ค่อยดีก็ตาม
+- **เราเป็นคนตัดสินใจ**ว่าคำถามข้อไหนสำคัญ LLM ไม่รู้จักผลิตภัณฑ์ แผนงาน หรือผู้ใช้ของเรา
 
 ---
 
-## Activity 2 – Loop 1: Submit a timesheet
+## กิจกรรม 2 – Loop 1: ส่ง timesheet
 
-### Goals
+### เป้าหมาย
 
-By the end of this activity you should be able to:
+เมื่อทำกิจกรรมนี้เสร็จ นิสิตควรจะสามารถ:
 
-- Prompt a coding agent to write one Jest test, and check that the test says what you want.
-- Prompt the agent to write *just enough* production code to pass the test.
-- Commit each red and green step of a TDD loop.
+- สั่ง coding agent ให้เขียน Jest test หนึ่งตัว และตรวจสอบว่า test บอกสิ่งที่เราต้องการ
+- สั่ง agent ให้เขียน production code *ให้น้อยที่สุดเท่าที่จำเป็น*เพื่อให้ test ผ่าน
+- Commit ทุกขั้น red และ green ของวงจร TDD
 
-### Step 1 – Red: let the agent write the first test
+### ขั้นที่ 1 – Red: ให้ agent เขียน test แรก
 
-1. In a **new chat** with your agent, send this prompt:
+1. เปิด**แชตใหม่**กับ agent แล้วส่ง prompt นี้:
    ```text
    Add one Jest test to tests/timesheet.test.js: test that when a timesheet is submitted with a project name and hours it returns true. Only add this test. Don't change any file in src/.
    ```
-2. Read the change. The test should look something like this:
+2. อ่านการเปลี่ยนแปลง test ควรมีหน้าตาคล้าย ๆ แบบนี้:
    ```js
    test('submitting a timesheet with a project name and hours returns true', () => {
      const timesheet = new Timesheet();
@@ -187,70 +187,70 @@ By the end of this activity you should be able to:
      expect(result).toBe(true);
    });
    ```
-   Make sure your test creates a `Timesheet`, calls a `submitTimesheet` method with a project name and a number of hours, and expects `true`. If it doesn't, ask the agent to fix it, or edit it yourself.
-3. Run the tests:
+   ตรวจสอบว่า test สร้าง `Timesheet` เรียกเมธอด `submitTimesheet` โดยส่งชื่อโปรเจกต์และจำนวนชั่วโมง และคาดหวังผลเป็น `true` ถ้าไม่ใช่ ให้ขอให้ agent แก้ หรือแก้เอง
+3. รัน test:
    ```bash
    npm test
    ```
-   The test **fails** with `TypeError: timesheet.submitTimesheet is not a function`. This is **red**: the method doesn't exist yet.
+   Test จะ**ล้มเหลว**พร้อมข้อความ `TypeError: timesheet.submitTimesheet is not a function` นี่คือ **red** เพราะเมธอดยังไม่มีอยู่จริง
 4. Commit:
    ```bash
    git add .
    git commit -m "loop 1: red"
    ```
 
-> 💡 Tip: Run `npm run test:watch` in a second terminal. Jest then reruns the tests every time a file changes.
+> 💡 เคล็ดลับ: เปิด terminal อีกหน้าต่างแล้วรัน `npm run test:watch` ไว้ Jest จะรัน test ใหม่ทุกครั้งที่ไฟล์เปลี่ยน
 
-### Step 2 – Green: let the test prompt the production code
+### ขั้นที่ 2 – Green: ให้ test เป็น prompt ของ production code
 
-1. In the **same chat**, send this prompt:
+1. ใน**แชตเดิม** ให้ส่ง prompt นี้:
    ```text
    Write just enough code in src/timesheet.js to make the failing test pass. Don't change the tests.
    ```
-2. Read the change. "Just enough" for this test is very little, for example:
+2. อ่านการเปลี่ยนแปลง โค้ดที่ "น้อยที่สุดเท่าที่จำเป็น" สำหรับ test นี้มีนิดเดียว เช่น:
    ```js
    submitTimesheet(projectName, duration) {
      return true;
    }
    ```
-   Agents often write **more** than you asked for, such as input validation or storage. No test checks that code yet, so ask the agent to remove it.
-3. Run `npm test`. The test **passes**. This is **green**.
+   Agent มักเขียนโค้ด**มากกว่า**ที่ขอ เช่น การตรวจสอบ input หรือการเก็บข้อมูล ซึ่งยังไม่มี test ไหนตรวจโค้ดส่วนนั้น ให้ขอให้ agent ลบออก
+3. รัน `npm test` test จะ**ผ่าน** นี่คือ **green**
 4. Commit:
    ```bash
    git add .
    git commit -m "loop 1: green"
    ```
 
-### Step 3 – Reflect
+### ขั้นที่ 3 – สะท้อนคิด
 
-You don't need to write or submit any answers for this step.
+ขั้นนี้ไม่ต้องเขียนหรือส่งคำตอบ
 
-- `return true;` passes the test but does almost nothing. Is that OK in TDD? (Hint: "just enough code to pass".)
-- Did your agent write just enough, or more? Why is code that no test checks a risk?
+- `return true;` ทำให้ test ผ่านแต่แทบไม่ได้ทำอะไรเลย แบบนี้ถือว่าใช้ได้ใน TDD หรือไม่ (คำใบ้: "เขียนโค้ดให้น้อยที่สุดเท่าที่จำเป็นเพื่อให้ test ผ่าน")
+- Agent ของเราเขียนแค่พอดี หรือเขียนเกินมา ทำไมโค้ดที่ไม่มี test ตรวจถึงเป็นความเสี่ยง
 
-### Key takeaways
+### สรุปประเด็นสำคัญ
 
-- The test is the prompt: the agent wrote the production code from what your test describes.
-- An agent tends to do more than you ask. In TDD, **you** decide how big each step is.
+- Test คือ prompt: agent เขียน production code จากสิ่งที่ test ของเราอธิบายไว้
+- Agent มักทำมากกว่าที่ขอ ใน TDD **เรา**เป็นคนกำหนดว่าแต่ละขั้นใหญ่แค่ไหน
 
 ---
 
-## Activity 3 – Loop 2: Retrieve timesheets
+## กิจกรรม 3 – Loop 2: ดึงรายการ timesheet
 
-### Goals
+### เป้าหมาย
 
-By the end of this activity you should be able to:
+เมื่อทำกิจกรรมนี้เสร็จ นิสิตควรจะสามารถ:
 
-- Steer the agent's design by giving it more context in your prompt.
-- Spot code that looks right but fails in JavaScript.
+- กำหนดทิศทางการออกแบบของ agent ด้วยการให้บริบทเพิ่มใน prompt
+- สังเกตเห็นโค้ดที่ดูเหมือนถูกแต่ใช้ไม่ได้ใน JavaScript
 
-### Step 1 – Red: a test for getting the timesheets back
+### ขั้นที่ 1 – Red: test สำหรับดึง timesheet กลับมา
 
-1. In a **new chat** with your agent, send this prompt:
+1. เปิด**แชตใหม่**กับ agent แล้วส่ง prompt นี้:
    ```text
    Add one Jest test to tests/timesheet.test.js: test that when timesheets are added they can be retrieved as a list. Only add this test. Don't change any file in src/.
    ```
-   The test should look something like this:
+   Test ควรมีหน้าตาคล้าย ๆ แบบนี้:
    ```js
    test('timesheets that are added can be retrieved as a list', () => {
      const timesheet = new Timesheet();
@@ -260,18 +260,18 @@ By the end of this activity you should be able to:
      expect(timesheet.getTimesheets()).toHaveLength(3);
    });
    ```
-   Make sure the test submits **three different projects** and expects `getTimesheets()` to return **3** items.
-2. Run `npm test`. The new test fails with `timesheet.getTimesheets is not a function`. Commit with the message `loop 2: red`.
+   ตรวจสอบว่า test ส่ง timesheet ของ**โปรเจกต์ที่ต่างกัน 3 โปรเจกต์** และคาดหวังให้ `getTimesheets()` คืนค่า **3** รายการ
+2. รัน `npm test` test ใหม่จะล้มเหลวพร้อมข้อความ `timesheet.getTimesheets is not a function` แล้ว commit ด้วย message `loop 2: red`
 
-### Step 2 – Green: steer the design
+### ขั้นที่ 2 – Green: กำหนดทิศทางการออกแบบ
 
-The book "warms up" its code assistant by adding a `Map` to the class, so that later suggestions build on it. With an agent, you can give the same context in the prompt.
+ในหนังสือ ผู้เขียน "warm up" code assistant ด้วยการเพิ่ม `Map` ลงในคลาส เพื่อให้ suggestion ต่อ ๆ ไปต่อยอดจากตรงนั้น เมื่อใช้ agent เราให้บริบทแบบเดียวกันได้ใน prompt
 
-1. In the **same chat**, send this prompt. The first sentence is the design decision:
+1. ใน**แชตเดิม** ให้ส่ง prompt นี้ ประโยคแรกคือการตัดสินใจเรื่องการออกแบบ:
    ```text
    Store the hours for each project in a Map keyed by project name: timesheets = new Map(). Write just enough code in src/timesheet.js to make the failing test pass. Don't change the tests.
    ```
-2. Read the change. It should look something like this:
+2. อ่านการเปลี่ยนแปลง ควรมีหน้าตาคล้าย ๆ แบบนี้:
    ```js
    class Timesheet {
      timesheets = new Map();
@@ -286,44 +286,44 @@ The book "warms up" its code assistant by adding a `Map` to the class, so that l
      }
    }
    ```
-3. Run `npm test` until **both** tests pass. Then commit with the message `loop 2: green`.
+3. รัน `npm test` จน test **ทั้งสองตัว**ผ่าน แล้ว commit ด้วย message `loop 2: green`
 
-> ⚠️ **A JavaScript trap:** if `getTimesheets` returns `this.timesheets.values()`, the test fails with `received value must have a length property`. `Map.prototype.values()` returns an **iterator**, not an array, so it has no `length`. In Java (the book's language), the equivalent code works. Fix it with `return [...this.timesheets.values()];`. AI tools often carry habits over from other languages.
+> ⚠️ **กับดักของ JavaScript:** ถ้า `getTimesheets` คืนค่า `this.timesheets.values()` test จะล้มเหลวพร้อมข้อความ `received value must have a length property` เพราะ `Map.prototype.values()` คืนค่าเป็น **iterator** ไม่ใช่ array จึงไม่มี `length` ใน Java (ภาษาที่ใช้ในหนังสือ) โค้ดแบบเดียวกันนี้ใช้ได้ ให้แก้เป็น `return [...this.timesheets.values()];` เครื่องมือ AI มักติดนิสัยจากภาษาอื่นมาด้วย
 
-**Optional:** undo the change and send the prompt again **without** the first sentence. What design does the agent choose when you don't give it one?
+**ทำเพิ่มเติม (ไม่บังคับ):** ยกเลิกการเปลี่ยนแปลง แล้วส่ง prompt อีกครั้ง**โดยไม่มี**ประโยคแรก agent เลือกการออกแบบแบบไหนเมื่อเราไม่ได้กำหนดให้
 
-### Step 3 – Reflect
+### ขั้นที่ 3 – สะท้อนคิด
 
-You don't need to write or submit any answers for this step.
+ขั้นนี้ไม่ต้องเขียนหรือส่งคำตอบ
 
-- How did the first sentence of the prompt change the code the agent wrote?
-- If code runs and *looks* right, is that enough? What would tell you it was wrong?
+- ประโยคแรกของ prompt เปลี่ยนโค้ดที่ agent เขียนอย่างไร
+- ถ้าโค้ดรันได้และ*ดู*ถูกต้อง เท่านั้นพอหรือไม่ อะไรจะบอกเราได้ว่ามันผิด
 
-### Key takeaways
+### สรุปประเด็นสำคัญ
 
-- An agent is only as good as its context. Your prompt, your tests and your existing code all steer what it writes.
-- Tests catch wrong code. Without the `toHaveLength(3)` check, the iterator bug would go unnoticed.
+- Agent ดีได้เท่ากับบริบทที่มันได้รับ prompt, test และโค้ดที่มีอยู่แล้วล้วนกำหนดทิศทางของสิ่งที่มันเขียน
+- Test จับโค้ดที่ผิดได้ ถ้าไม่มี check `toHaveLength(3)` บั๊กเรื่อง iterator ก็จะหลุดไปโดยไม่มีใครรู้
 
 ---
 
-## Activity 4 – Loop 3: Total the hours for a project
+## กิจกรรม 4 – Loop 3: รวมชั่วโมงของโปรเจกต์
 
-### Goals
+### เป้าหมาย
 
-By the end of this activity you should be able to:
+เมื่อทำกิจกรรมนี้เสร็จ นิสิตควรจะสามารถ:
 
-- Change a generated test so that it drives the design **you** want.
-- Use a failing test to find a bug yourself, then steer the agent to the fix.
+- แก้ test ที่ถูกสร้างขึ้น ให้ขับเคลื่อนการออกแบบตามที่**เรา**ต้องการ
+- ใช้ test ที่ล้มเหลวเพื่อหาบั๊กด้วยตัวเอง แล้วนำทาง agent ไปสู่การแก้ไข
 
-### Step 1 – Red: you decide the design
+### ขั้นที่ 1 – Red: เราเป็นคนตัดสินใจเรื่องการออกแบบ
 
-One of the questions in Activity 1 was about updates to the **same project**. There is only one user for now, but the same user may submit time to the same project more than once.
+คำถามข้อหนึ่งในกิจกรรม 1 เกี่ยวกับการบันทึกเวลาให้**โปรเจกต์เดียวกัน** ตอนนี้มีผู้ใช้คนเดียว แต่ผู้ใช้คนเดียวกันก็อาจส่งเวลาให้โปรเจกต์เดิมได้หลายครั้ง
 
-1. In a **new chat** with your agent, send this prompt:
+1. เปิด**แชตใหม่**กับ agent แล้วส่ง prompt นี้:
    ```text
    Add one Jest test to tests/timesheet.test.js: test that the total hours worked can be calculated from a list of timesheets from one project. Only add this test. Don't change any file in src/.
    ```
-2. Read the test. The agent may add up the hours **inside the test**, for example with `reduce`. That's not the design we want: the `Timesheet` class should calculate the total. Make sure the test looks like this, and ask the agent to change it or edit it yourself if it doesn't:
+2. อ่าน test agent อาจรวมชั่วโมง**ภายใน test เอง** เช่น ใช้ `reduce` ซึ่งไม่ใช่การออกแบบที่เราต้องการ คลาส `Timesheet` ควรเป็นผู้คำนวณผลรวม ตรวจสอบให้ test มีหน้าตาแบบนี้ ถ้าไม่ใช่ ให้ขอให้ agent แก้ หรือแก้เอง:
    ```js
    test('the total hours worked on one project can be calculated', () => {
      const timesheet = new Timesheet();
@@ -334,29 +334,29 @@ One of the questions in Activity 1 was about updates to the **same project**. Th
      expect(total).toBe(24);
    });
    ```
-3. Run `npm test`. The test fails because the method doesn't exist. Commit with the message `loop 3: red`.
+3. รัน `npm test` test จะล้มเหลวเพราะยังไม่มีเมธอดนี้ แล้ว commit ด้วย message `loop 3: red`
 
-### Step 2 – Green: find and fix the bug
+### ขั้นที่ 2 – Green: หาบั๊กแล้วแก้
 
-An agent can often find and fix a bug on its own. In this step, **you** find it first.
+Agent มักหาบั๊กและแก้เองได้ แต่ในขั้นนี้ **เรา**จะหาบั๊กให้เจอก่อน
 
-1. In the **same chat**, send this prompt:
+1. ใน**แชตเดิม** ให้ส่ง prompt นี้:
    ```text
    Add a getTotalTimesheetHours(projectName) method to src/timesheet.js that returns the hours stored for the project. Don't change anything else.
    ```
-2. Run `npm test`. The test **still fails**, but for a different reason:
+2. รัน `npm test` test **ยังล้มเหลว** แต่ด้วยเหตุผลที่ต่างออกไป:
    ```text
    Expected: 24
    Received: 8
    ```
-   Before you read on, work out why from the code.
+   ก่อนอ่านต่อ ให้ลองหาสาเหตุจากโค้ดด้วยตัวเอง
 
-   The `Map` stores **one** value per project, so each `set` overwrites the previous hours instead of adding to them.
-3. Steer the agent to the fix. In the **same chat**, send this prompt:
+   `Map` เก็บค่าได้**ค่าเดียว**ต่อโปรเจกต์ การ `set` แต่ละครั้งจึงเขียนทับชั่วโมงเดิม แทนที่จะบวกเพิ่ม
+3. นำทาง agent ไปสู่การแก้ไข ใน**แชตเดิม** ให้ส่ง prompt นี้:
    ```text
    In submitTimesheet, check to see if the project already exists. If it does, add the new duration to the existing total. Don't change the tests.
    ```
-   The change should look something like this:
+   การเปลี่ยนแปลงควรมีหน้าตาคล้าย ๆ แบบนี้:
    ```js
    submitTimesheet(projectName, duration) {
      if (this.timesheets.has(projectName)) {
@@ -366,39 +366,39 @@ An agent can often find and fix a bug on its own. In this step, **you** find it 
      return true;
    }
    ```
-4. Run `npm test` until **all three** tests pass. Commit with the message `loop 3: green`.
+4. รัน `npm test` จน test **ทั้งสามตัว**ผ่าน แล้ว commit ด้วย message `loop 3: green`
 
-> 💡 If your test already passed at the end of Step 2.1, your agent added the hours together without being asked, in this loop or in Loop 2. Look at the code it wrote: which test asked for that behaviour?
+> 💡 ถ้า test ผ่านไปแล้วตั้งแต่จบข้อ 2.1 แสดงว่า agent บวกชั่วโมงให้เองโดยไม่ได้ถูกขอ ไม่ว่าจะใน loop นี้หรือใน Loop 2 ลองดูโค้ดที่มันเขียน: test ไหนขอพฤติกรรมนั้น
 
-### Step 3 – Reflect
+### ขั้นที่ 3 – สะท้อนคิด
 
-You don't need to write or submit any answers for this step.
+ขั้นนี้ไม่ต้องเขียนหรือส่งคำตอบ
 
-- The agent's first test may have calculated the total in the test. Why is it better to make the class responsible for it?
-- In Step 2 the test failed twice, for two different reasons. What did each failure tell you?
+- Test แรกที่ agent เขียนอาจคำนวณผลรวมใน test ทำไมการให้คลาสรับผิดชอบการคำนวณจึงดีกว่า
+- ในขั้นที่ 2 test ล้มเหลวสองครั้งด้วยเหตุผลต่างกัน ความล้มเหลวแต่ละครั้งบอกอะไรเรา
 
-### Key takeaways
+### สรุปประเด็นสำคัญ
 
-- The agent suggests; **you design**. Change generated tests until they describe the behaviour you want.
-- A short, specific prompt that names the problem is often enough to steer the agent to the code you need.
+- Agent เป็นผู้เสนอ ส่วน**เราเป็นผู้ออกแบบ** แก้ test ที่ถูกสร้างขึ้นจนกว่าจะอธิบายพฤติกรรมที่เราต้องการ
+- Prompt สั้น ๆ ที่เจาะจงและระบุปัญหาชัดเจน มักเพียงพอที่จะนำทาง agent ไปสู่โค้ดที่เราต้องการ
 
 ---
 
-## Activity 5 – Refactor with an LLM pair
+## กิจกรรม 5 – Refactor โดยมี LLM เป็นคู่หู
 
-All three tests pass, but the code is getting more complex. Without a colleague to pair with, we ask the LLM to review the code and suggest risks, then decide which suggestions to trust.
+ตอนนี้ test ทั้งสามตัวผ่านแล้ว แต่โค้ดเริ่มซับซ้อนขึ้น เมื่อไม่มีเพื่อนร่วมงานมาจับคู่ เราจะขอให้ LLM รีวิวโค้ดและเสนอความเสี่ยง แล้วตัดสินใจเองว่าจะเชื่อข้อเสนอไหน
 
-### Goals
+### เป้าหมาย
 
-By the end of this activity you should be able to:
+เมื่อทำกิจกรรมนี้เสร็จ นิสิตควรจะสามารถ:
 
-- Use an LLM to review your code for risks and to refactor it.
-- Check that a refactoring keeps your tests green.
-- Recognise when an LLM's suggestion is wrong or made up (a **hallucination**), and when to stop relying on the LLM.
+- ใช้ LLM รีวิวโค้ดเพื่อหาความเสี่ยง และ refactor โค้ด
+- ตรวจสอบว่าการ refactor ยังทำให้ test ผ่านอยู่
+- สังเกตได้ว่าเมื่อไรข้อเสนอของ LLM ผิดหรือถูกแต่งขึ้นมา (**hallucination**) และเมื่อไรควรเลิกพึ่ง LLM
 
-### Step 1 – Ask for risks
+### ขั้นที่ 1 – ขอให้หาความเสี่ยง
 
-In a **new chat** with your agent, send this prompt. The agent must not change any files in this step, so use a mode that only answers if your agent has one:
+เปิด**แชตใหม่**กับ agent แล้วส่ง prompt นี้ ในขั้นนี้ agent ห้ามแก้ไขไฟล์ ถ้า agent มีโหมดที่ตอบอย่างเดียว ให้ใช้โหมดนั้น:
 
 ```text
 You are a software testing expert. Analyze the JavaScript code in src/timesheet.js and identify risks that might impact the code. If no code is provided, respond with "No risks could be found". Don't change any files.
@@ -409,28 +409,28 @@ Example:
 Overflow - Security - Adding in large integers as parameters might cause the method to trigger a buffer overflow.
 ```
 
-### Step 2 – Ask for a refactoring
+### ขั้นที่ 2 – ขอให้ refactor
 
-In the **same chat**, send this follow-up prompt. If you used a mode that only answers, switch to agent mode first. The last sentence asks the agent to check its solution before it finishes, as in the earlier exercises:
+ใน**แชตเดิม** ให้ส่ง prompt ต่อไปนี้ ถ้าใช้โหมดที่ตอบอย่างเดียวอยู่ ให้เปลี่ยนเป็น agent mode ก่อน ประโยคสุดท้ายขอให้ agent ตรวจคำตอบของตัวเองก่อนทำเสร็จ เหมือนในแบบฝึกหัดก่อนหน้า:
 
 ```text
 Refactor src/timesheet.js to mitigate the risks you suggested. Don't change the tests. Check to see that each risk has been mitigated before you finish.
 ```
 
-1. Read the change, then run `npm test`.
-   - If all the tests pass, the refactoring kept the behaviour your tests describe.
-   - If a test fails, decide which is wrong: the refactored code, or your test. For example, did the agent change what `submitTimesheet` returns, or rename a method? Fix the code or the test yourself.
-2. When all the tests pass, commit with the message `refactor: apply LLM suggestions`.
+1. อ่านการเปลี่ยนแปลง แล้วรัน `npm test`
+   - ถ้า test ผ่านทั้งหมด แสดงว่าการ refactor ยังคงพฤติกรรมตามที่ test ของเราอธิบายไว้
+   - ถ้ามี test ล้มเหลว ให้ตัดสินใจว่าอะไรผิด ระหว่างโค้ดที่ refactor แล้ว หรือ test ของเรา เช่น agent เปลี่ยนค่าที่ `submitTimesheet` คืนกลับมา หรือเปลี่ยนชื่อเมธอดหรือไม่ แล้วแก้โค้ดหรือ test เอง
+2. เมื่อ test ผ่านทั้งหมดแล้ว ให้ commit ด้วย message `refactor: apply LLM suggestions`
 
-### Step 3 – Check the refactoring
+### ขั้นที่ 3 – ตรวจผลการ refactor
 
-In a **new chat**, send the **same prompt as Step 1** again. The agent now analyses your refactored code. Compare the new list of risks with the first one. You don't need to write or submit your answers.
+เปิด**แชตใหม่** แล้วส่ง **prompt เดียวกับขั้นที่ 1** อีกครั้ง คราวนี้ agent จะวิเคราะห์โค้ดที่ refactor แล้ว เปรียบเทียบรายการความเสี่ยงใหม่กับรายการแรก ขั้นนี้ไม่ต้องเขียนหรือส่งคำตอบ
 
-- **Mitigated:** which risks from the first list have really gone? Check the code yourself; don't trust the LLM's word for it.
-- **Renamed:** does any "new" risk look like an old one with a different name?
-- **Made up:** does the LLM claim the code doesn't handle something that it **does** handle? (For example, a claim that a duration of 0 or less is not handled, when your refactored code already rejects it.) That's a hallucination.
-- **Irrelevant:** did the LLM warn about threads or concurrency? JavaScript runs your code on a single thread, so is that risk real here?
-- **Missed:** try this in the Node.js REPL (run `node` in the project folder). Did the LLM spot it?
+- **แก้แล้วจริง:** ความเสี่ยงข้อไหนจากรายการแรกหายไปจริง ๆ ให้ตรวจโค้ดด้วยตัวเอง อย่าเชื่อแค่คำพูดของ LLM
+- **เปลี่ยนชื่อ:** มีความเสี่ยง "ใหม่" ข้อไหนที่ดูเหมือนข้อเดิมแต่เปลี่ยนชื่อหรือไม่
+- **แต่งขึ้นมา:** LLM อ้างว่าโค้ดไม่ได้จัดการบางกรณี ทั้งที่จริง ๆ จัดการ**แล้ว**หรือไม่ (เช่น อ้างว่าไม่ได้จัดการ duration ที่เป็น 0 หรือติดลบ ทั้งที่โค้ดที่ refactor แล้วปฏิเสธไว้แล้ว) นั่นคือ hallucination
+- **ไม่เกี่ยวข้อง:** LLM เตือนเรื่อง thread หรือ concurrency หรือไม่ JavaScript รันโค้ดของเราบน thread เดียว ความเสี่ยงนี้มีอยู่จริงในกรณีนี้หรือไม่
+- **มองข้ามไป:** ลองรันโค้ดนี้ใน Node.js REPL (พิมพ์ `node` ในโฟลเดอร์ของโปรเจกต์) LLM มองเห็นปัญหานี้หรือไม่
   ```js
   const Timesheet = require('./src/timesheet');
   const t = new Timesheet();
@@ -438,12 +438,12 @@ In a **new chat**, send the **same prompt as Step 1** again. The agent now analy
   t.submitTimesheet('Project 1', '8');
   t.getTotalTimesheetHours('Project 1');
   ```
-  With the code from Activity 4, the result is the **string** `'88'`, not the number `16`: `+` joins strings. What does your refactored code return?
+  กับโค้ดจากกิจกรรม 4 ผลลัพธ์คือ **string** `'88'` ไม่ใช่ตัวเลข `16` เพราะ `+` ต่อ string เข้าด้วยกัน โค้ดที่ refactor แล้วของเราคืนค่าอะไร
 
-### Key takeaways
+### สรุปประเด็นสำคัญ
 
-- An LLM can act as a quick pair partner for reviewing code, but the quality of its risks varies. Some are concrete and useful; others are vague, irrelevant or made up.
-- The more often you ask the same LLM for "more risks", the more likely it is to invent them.
-- Your tests are the safety net for an AI-generated refactoring. Always run them.
-- Knowing **when to stop relying on the LLM and take charge** is a skill. For example, fix a risk yourself, test first, rather than asking the LLM to refactor again and again.
-- In TDD, the tests express **your** design. Coding agents speed up the work, but the analysis and design decisions are yours.
+- LLM ทำหน้าที่เป็นคู่หูรีวิวโค้ดแบบรวดเร็วได้ แต่คุณภาพของความเสี่ยงที่เสนอนั้นไม่แน่นอน บางข้อชัดเจนและมีประโยชน์ บางข้อกว้างเกินไป ไม่เกี่ยวข้อง หรือถูกแต่งขึ้นมา
+- ยิ่งขอ "ความเสี่ยงเพิ่มเติม" จาก LLM ตัวเดิมบ่อยเท่าไร ก็ยิ่งมีโอกาสที่มันจะแต่งขึ้นมามากเท่านั้น
+- Test ของเราคือตาข่ายรองรับ (safety net) สำหรับการ refactor ที่ AI สร้างขึ้น ต้องรัน test ทุกครั้ง
+- การรู้ว่า**เมื่อไรควรเลิกพึ่ง LLM แล้วลงมือเอง**เป็นทักษะ เช่น แก้ความเสี่ยงด้วยตัวเองโดยเขียน test ก่อน แทนที่จะขอให้ LLM refactor ซ้ำไปเรื่อย ๆ
+- ใน TDD test คือสิ่งที่แสดงการออกแบบของ**เรา** coding agent ช่วยให้ทำงานได้เร็วขึ้น แต่การวิเคราะห์และการตัดสินใจเรื่องการออกแบบเป็นของเรา
