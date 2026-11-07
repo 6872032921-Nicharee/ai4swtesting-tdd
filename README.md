@@ -343,7 +343,7 @@ Features:
    ```text
    Add one Jest test to tests/timesheet.test.js: test that the total hours worked can be calculated from a list of timesheets from one project. Only add this test. Don't change any file in src/.
    ```
-2. อ่าน test agent อาจรวมชั่วโมง**ภายใน test เอง** เช่น ใช้ `reduce` ซึ่งไม่ใช่การออกแบบที่เราต้องการ คลาส `Timesheet` ควรเป็นผู้คำนวณผลรวม ตรวจสอบให้ test มีหน้าตาแบบนี้ ถ้าไม่ใช่ ให้ขอให้ agent แก้ หรือแก้เอง:
+2. ให้นิสิตอ่าน test หากพบว่า agent รวมชั่วโมง**ภายใน test เอง** เช่น ใช้ `reduce` ซึ่งไม่ใช่การออกแบบที่เราต้องการ เพราะคลาส `Timesheet` ควรเป็นผู้คำนวณผลรวม ให้นิสิตตรวจสอบให้ test มีหน้าตาแบบนี้ ถ้าไม่ใช่ ให้นิสิตขอให้ agent แก้ หรือแก้เอง:
    ```js
    test('the total hours worked on one project can be calculated', () => {
      const timesheet = new Timesheet();
