@@ -3,7 +3,7 @@
 🌐 **English** | [ภาษาไทย](README.th.md)
 
 A hands-on exercise in using generative AI to aid **test-driven development (TDD)**, for the **AI for Software Testing** lecture
-(2110724 Software Quality Assurance and Testing).
+(2110724 Software Testing and Quality Assurance).
 
 The exercise follows the worked TDD example in Chapter 4 of the book *Software Testing with Generative AI* (Mark Winteringham, Manning), rewritten in **JavaScript and Jest** instead of Java and JUnit.
 You will build a small timesheet manager one red/green/refactor loop at a time. A **coding agent in VS Code** helps you write the tests and the code, and also plays the role of a tester you pair with.
