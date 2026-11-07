@@ -55,8 +55,6 @@ npm test
 ### วิธีส่งงาน
 
 นิสิตส่ง**โค้ดพร้อมประวัติการ commit** ไม่ต้องเขียนหรือส่งไฟล์คำตอบใด ๆ
-<img width="1529" height="565" alt="red-green-refactor" src="https://github.com/user-attachments/assets/2b4b0614-bea6-40c0-b779-c8f5498dd640" />
-
 1. **Commit ทุกครั้งที่จบขั้น red, green และ refactor** โดยใช้ commit message ตามที่กำหนดในแต่ละกิจกรรม (เช่น `loop 1: red`) ผู้สอนจะดูจากประวัติการ commit ว่านิสิตเขียน test ก่อนเขียนโค้ดจริง
 2. Push commit ทั้งหมดขึ้น fork ของตัวเอง:
    ```bash
@@ -88,7 +86,7 @@ npm test
 ### วงจร TDD
 
 กิจกรรม 2 ถึง 5 ใช้วงจร **red/green/refactor**:
-
+<img width="1529" height="565" alt="red-green-refactor" src="https://github.com/user-attachments/assets/2b4b0614-bea6-40c0-b779-c8f5498dd640" />
 1. **Red** – เขียน unit test สำหรับพฤติกรรมที่ยังไม่มีอยู่ แล้วดูให้เห็นว่า test ล้มเหลว
 2. **Green** – เขียน production code ให้น้อยที่สุดเท่าที่จำเป็นเพื่อให้ test ผ่าน (และ test อื่นทั้งหมดยังต้องผ่าน)
 3. **Refactor** – ปรับปรุงโค้ดให้ดีขึ้น โดยที่ test ทั้งหมดยังผ่าน (green) อยู่
