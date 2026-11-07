@@ -452,7 +452,7 @@ Refactor src/timesheet.js to mitigate the risks you suggested. Don't change the 
 - **เปลี่ยนชื่อ:** มีความเสี่ยง "ใหม่" ข้อไหนที่ดูเหมือนข้อเดิมแต่เปลี่ยนชื่อหรือไม่
 - **แต่งขึ้นมา:** LLM อ้างว่าโค้ดไม่ได้จัดการบางกรณี ทั้งที่จริง ๆ จัดการ**แล้ว**หรือไม่ (เช่น อ้างว่าไม่ได้จัดการ duration ที่เป็น 0 หรือติดลบ ทั้งที่โค้ดที่ refactor แล้วปฏิเสธไว้แล้ว) นั่นคือ hallucination
 - **ไม่เกี่ยวข้อง:** LLM เตือนเรื่อง thread หรือ concurrency หรือไม่ JavaScript รันโค้ดของเราบน thread เดียว ความเสี่ยงนี้มีอยู่จริงในกรณีนี้หรือไม่
-- **มองข้ามไป:** ลองรันโค้ดนี้ใน Node.js REPL (พิมพ์ `node` ในโฟลเดอร์ของโปรเจกต์) LLM มองเห็นปัญหานี้หรือไม่
+- **มองข้ามไป:** ลองรันโค้ดนี้ใน Node.js REPL (พิมพ์ `node` ในโฟลเดอร์ของโปรเจกต์ เพื่อเปิดโหมด REPL แล้ววางโค้ดด้านล่างลงไป) ให้นิสิตดูผลการรันว่า LLM มองเห็นปัญหานี้หรือไม่
   ```js
   const Timesheet = require('./src/timesheet');
   const t = new Timesheet();
@@ -460,7 +460,7 @@ Refactor src/timesheet.js to mitigate the risks you suggested. Don't change the 
   t.submitTimesheet('Project 1', '8');
   t.getTotalTimesheetHours('Project 1');
   ```
-  กับโค้ดจากกิจกรรม 4 ผลลัพธ์คือ **string** `'88'` ไม่ใช่ตัวเลข `16` เพราะ `+` ต่อ string เข้าด้วยกัน โค้ดที่ refactor แล้วของเราคืนค่าอะไร
+  นิสิตจะเห็นว่า โค้ดนี้ให้ผลลัพธ์คือ **string** `'88'` ไม่ใช่ตัวเลข `16` เพราะ `+` ต่อ string เข้าด้วยกัน ให้สังเกตว่าโค้ดที่ refactor แล้วของเราคืนค่าอะไร?
 
 ### สรุปประเด็นสำคัญ
 
