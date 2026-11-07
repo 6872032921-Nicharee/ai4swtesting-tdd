@@ -55,6 +55,7 @@ npm test
 ### วิธีส่งงาน
 
 นิสิตส่ง**โค้ดพร้อมประวัติการ commit** ไม่ต้องเขียนหรือส่งไฟล์คำตอบใด ๆ
+<img width="1529" height="565" alt="red-green-refactor" src="https://github.com/user-attachments/assets/2b4b0614-bea6-40c0-b779-c8f5498dd640" />
 
 1. **Commit ทุกครั้งที่จบขั้น red, green และ refactor** โดยใช้ commit message ตามที่กำหนดในแต่ละกิจกรรม (เช่น `loop 1: red`) ผู้สอนจะดูจากประวัติการ commit ว่านิสิตเขียน test ก่อนเขียนโค้ดจริง
 2. Push commit ทั้งหมดขึ้น fork ของตัวเอง:
