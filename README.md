@@ -2,7 +2,7 @@
 
 🌐 [English](README.md) | **ภาษาไทย**
 
-แบบฝึกหัดลงมือปฏิบัติเรื่องการใช้ Generative AI ช่วยในการพัฒนาแบบ **Test-Driven Development (TDD)** สำหรับการบรรยายเรื่อง **AI for Software Testing**
+แบบฝึกหัดเรื่องการใช้ Generative AI ช่วยในการพัฒนาแบบ **Test-Driven Development (TDD)** สำหรับการบรรยายเรื่อง **AI for Software Testing**
 (วิชา 2110724 Software Testing and Quality Assurance)
 
 แบบฝึกหัดนี้อ้างอิงจากตัวอย่าง TDD ในบทที่ 4 ของหนังสือ *Software Testing with Generative AI* (Mark Winteringham, Manning) โดยเปลี่ยนจาก Java และ JUnit มาเป็น **JavaScript และ Jest**
