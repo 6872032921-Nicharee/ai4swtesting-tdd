@@ -14,3 +14,12 @@ test('submitting timesheets for three projects stores all three timesheets', () 
 
   expect(timesheet.getTimesheets()).toHaveLength(3);
 });
+
+test('getting total timesheet hours for a project returns the sum of its submissions', () => {
+  const timesheet = new Timesheet();
+  timesheet.submitTimesheet('Project 1', 8);
+  timesheet.submitTimesheet('Project 1', 8);
+  timesheet.submitTimesheet('Project 1', 8);
+
+  expect(timesheet.getTotalTimesheetHours('Project 1')).toBe(24);
+});
