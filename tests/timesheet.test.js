@@ -5,3 +5,12 @@ test('submitting a timesheet with a project name and hours returns true', () => 
   const result = timesheet.submitTimesheet('Project 1', 8);
   expect(result).toBe(true);
 });
+
+test('submitting timesheets for three projects stores all three timesheets', () => {
+  const timesheet = new Timesheet();
+  timesheet.submitTimesheet('Project 1', 8);
+  timesheet.submitTimesheet('Project 2', 8);
+  timesheet.submitTimesheet('Project 3', 8);
+
+  expect(timesheet.getTimesheets()).toHaveLength(3);
+});
